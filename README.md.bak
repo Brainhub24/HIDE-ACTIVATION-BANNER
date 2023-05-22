@@ -1,11 +1,12 @@
-"""
+```batch
     ___                _   _            _         __    __ _           _                       ___                             
    /   \___  __ _  ___| |_(_)_   ____ _| |_ ___  / / /\ \ (_)_ __   __| | _____      _____    / __\ __ _ _ __  _ __   ___ _ __ 
   / /\ / _ \/ _` |/ __| __| \ \ / / _` | __/ _ \ \ \/  \/ / | '_ \ / _` |/ _ \ \ /\ / / __|  /__\/// _` | '_ \| '_ \ / _ \ '__|
  / /_//  __/ (_| | (__| |_| |\ V / (_| | ||  __/  \  /\  /| | | | | (_| | (_) \ V  V /\__ \ / \/  \ (_| | | | | | | |  __/ |   
 /___,' \___|\__,_|\___|\__|_| \_/ \__,_|\__\___|   \/  \/ |_|_| |_|\__,_|\___/ \_/\_/ |___/ \_____/\__,_|_| |_|_| |_|\___|_|   
                                                                                                                                
-"""
+``` 
+kk
 
 This batch script provides a simple and effective solution to deactivate the "Activate Windows" banner that appears on Windows operating systems. By terminating and restarting the explorer.exe process, the script ensures the banner is removed from the desktop.
 
