@@ -8,7 +8,60 @@ REM Code created: 21.05.2019
 REM Code updated: 22.05.2023
 
 @echo off
+rem Turn off the display of commands and output
+
+set "installFlag=%UserProfile%\activate_banner_installed.txt"
+set "codeOfConductFile=code_of_conduct.txt"
+set "disclaimerFile=disclaimer.txt"
+
+rem Check if the installation flag exists
+if exist "%installFlag%" (
+    echo The "Activate Windows" banner has already been removed.
+    pause
+    exit
+)
+
+rem Display the code of conduct
+type "%codeOfConductFile%"
+echo.
+echo Code of Conduct:
+echo Please read and accept the code of conduct to continue.
+echo.
+
+set /p "codeOfConductChoice=Do you accept the code of conduct? (Y/N): "
+if /i "%codeOfConductChoice%"=="N" (
+    echo Operation cancelled by user.
+    pause
+    exit
+)
+
+rem Display the disclaimer
+type "%disclaimerFile%"
+echo.
+echo Disclaimer:
+echo Please read and accept the disclaimer to continue.
+echo.
+
+set /p "disclaimerChoice=Do you accept the disclaimer? (Y/N): "
+if /i "%disclaimerChoice%"=="N" (
+    echo Operation cancelled by user.
+    pause
+    exit
+)
+
+rem Modify the registry to remove the banner
+rem https://admx.help/HKCU/
 reg add "HKCU\Control Panel\Desktop" /v PaintDesktopVersion /t REG_DWORD /d 0 /f
+
+rem Terminate and restart the Windows Explorer process
 taskkill /F /IM explorer.exe
 explorer.exe
+
+rem Create the installation flag
+echo Installation complete. The "Activate Windows" banner will no longer appear.
+echo.
+echo Press any key to continue.
+pause >nul
+echo Installation complete. The "Activate Windows" banner will no longer appear.>"%installFlag%"
+
 exit
