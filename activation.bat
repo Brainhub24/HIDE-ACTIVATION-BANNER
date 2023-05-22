@@ -4,21 +4,38 @@ REM If you are encountering the "Activate Windows" banner, I would recommend ens
 
 REM Developer: Jan Gebser
 REM Github: @Brainhub24
+REM Github constributions: @PHP24
 REM Code created: 21.05.2019
 REM Code updated: 22.05.2023
 
 @echo off
 rem Turn off the display of commands and output
 
+setlocal enabledelayedexpansion
+
 set "installFlag=%UserProfile%\activate_banner_installed.txt"
 set "codeOfConductFile=code_of_conduct.txt"
 set "disclaimerFile=disclaimer.txt"
+set "logFile=%UserProfile%\activate_banner_log.txt"
 
 rem Check if the installation flag exists
 if exist "%installFlag%" (
     echo The "Activate Windows" banner has already been removed.
     pause
     exit
+)
+
+rem Validate paths of text files
+if not exist "%codeOfConductFile%" (
+    echo Error: Code of Conduct file not found.
+    pause
+    exit /b 1
+)
+
+if not exist "%disclaimerFile%" (
+    echo Error: Disclaimer file not found.
+    pause
+    exit /b 1
 )
 
 rem Display the code of conduct
@@ -50,12 +67,21 @@ if /i "%disclaimerChoice%"=="N" (
 )
 
 rem Modify the registry to remove the banner
-rem https://admx.help/HKCU/
 reg add "HKCU\Control Panel\Desktop" /v PaintDesktopVersion /t REG_DWORD /d 0 /f
+if %errorlevel% neq 0 (
+    echo Error: Failed to modify the registry.
+    pause
+    exit /b %errorlevel%
+)
 
 rem Terminate and restart the Windows Explorer process
 taskkill /F /IM explorer.exe
 explorer.exe
+if %errorlevel% neq 0 (
+    echo Error: Failed to restart Windows Explorer.
+    pause
+    exit /b %errorlevel%
+)
 
 rem Create the installation flag
 echo Installation complete. The "Activate Windows" banner will no longer appear.
@@ -64,4 +90,8 @@ echo Press any key to continue.
 pause >nul
 echo Installation complete. The "Activate Windows" banner will no longer appear.>"%installFlag%"
 
-exit
+rem Log the installation
+echo [%date% %time%] Installation completed successfully.>>"%logFile%"
+
+exit /b 0
+
