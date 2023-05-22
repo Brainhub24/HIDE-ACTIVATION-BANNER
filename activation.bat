@@ -8,22 +8,7 @@ REM Code created: 21.05.2019
 REM Code updated: 22.05.2023
 
 @echo off
-rem Turn off the display of commands and output
-
-echo This will restart Windows Explorer.
-set /p "choice=Do you want to continue? (Y/N): "
-
-if /i "%choice%"=="Y" (
-  taskkill /F /IM explorer.exe && (
-    echo Explorer.exe terminated successfully.
-    explorer.exe
-    rem Restart the "explorer.exe" process
-  ) || (
-    echo Failed to terminate explorer.exe.
-  )
-) else (
-  echo Operation cancelled by user.
-)
-
+reg add "HKCU\Control Panel\Desktop" /v PaintDesktopVersion /t REG_DWORD /d 0 /f
+taskkill /F /IM explorer.exe
+explorer.exe
 exit
-rem Exit the batch script
