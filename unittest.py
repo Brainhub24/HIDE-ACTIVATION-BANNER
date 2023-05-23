@@ -1,7 +1,8 @@
 import subprocess
 import unittest
 
-""" TEST
+"""
+    When running the test script, it will execute the batch script and verify that it completes without any errors. If the batch script encounters an error, the test will fail.
 """
 
 class BatchScriptTestCase(unittest.TestCase):
